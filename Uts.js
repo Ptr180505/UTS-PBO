@@ -1,43 +1,49 @@
-class karyawan {
-    constructor (nama, kuotaCuti) {
+class Karyawan {
+    constructor(nama, cuti) {
         this.nama = nama;
-        this.kuotaCuti = kuotaCuti;
-    }
-
-ajukanCuti(jumlahHari, jenisCuti) {
-    if (jumlahHari > this.kuotaCuti) {
-      console.log(`${this.nama}: Kuota anda tidak cukup untuk mengajukan ${jenisCuti}.`);
-    } 
-    else {
-      this.kuotaCuti = jumlahHari;
-      console.log(` ${this.nama}: Pengajuan ${jenisCuti} selama ${jumlahHari} hari disetujui. 
-Sisa kuota cuti: ${this.kuotaCuti} hari.`);
-    }
-  }
-}
-
-class CutiTahunan extends karyawan {
-    constructor(nama) {
-        super(nama, 12);
+        this.cuti = cuti;
     }
 }
 
-class CutiSakit extends karyawan {
-    constructor (nama) {
-        super(nama, 2);
+class CutiTahunan extends Karyawan {
+    mengajukanCuti(jumlahCuti) {
+        if (this.cuti >= jumlahCuti) {
+            this.cuti -= jumlahCuti;
+            console.log(`Max kuota 12 hari cuti, sisa cuti anda ${this.cuti} hari`);
+        } else {
+            console.log(`Maaf cuti anda tidak cukup`);
+        }
     }
 }
 
-class CutiMelahirkan extends karyawan {
-    constructor (nama) {
-        super(nama, 90);
+class CutiSakit extends Karyawan {
+    mengajukanCuti(jumlahCuti) {
+        if (this.cuti >= jumlahCuti) {
+            this.cuti -= jumlahCuti;
+            console.log(`Max kuota 2 hari cuti sakit, sisa cuti anda ${this.cuti} hari`);
+        } else {
+            console.log(`Maaf cuti anda tidak cukup`);
+        }
     }
 }
 
-const Jubet = new CutiTahunan("Jubet");
-const lola = new CutiSakit("lola");
-const liya = new CutiMelahirkan("liya");
+class CutiMelahirkan extends Karyawan {
+    mengajukanCuti(jumlahCuti) {
+        if (this.cuti >= jumlahCuti) {
+            this.cuti -= jumlahCuti;
+            console.log(`Max kuota 90 hari cuti melahirkan, sisa cuti anda ${this.cuti} hari`);
+        } else {
+            console.log(`Maaf cuti anda tidak cukup`);
+        }
+    }
+}
 
-Jubet.ajukanCuti(5, "Cuti Tahunan");
-lola.ajukanCuti(3, "Cuti Sakit"); 
-liya.ajukanCuti(60, "Cuti Melahirkan");
+// --- Contoh penggunaan (versi singkat) ---
+const tahunan = new CutiTahunan("Jubet", 12);
+tahunan.mengajukanCuti(5);
+
+const sakit = new CutiSakit("Rilia", 2);
+sakit.mengajukanCuti(1);
+
+const melahirkan = new CutiMelahirkan("Reva", 90);
+melahirkan.mengajukanCuti(30);
